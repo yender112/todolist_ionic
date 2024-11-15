@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>Lista de Tareas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCategories()" color="primary">
+        <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="fixed-top">
+    <!-- Category Filter -->
+    <div class="category-chips-container">
+      <ion-chip class="category-chip" *ngFor="let category of categories; trackBy: trackByCategoryId"
+        (click)="selectCategory(category.id)" [class.selected]="selectedCategoryId === category.id">
+        <ion-label>{{ category.name }}</ion-label>
+      </ion-chip>
+    </div>
+
+    <!-- New Task Input -->
+    <ion-item class="new-task-input">
+      <ion-input [(ngModel)]="newTaskTitle" placeholder="Agregar nueva tarea" (keyup.enter)="addTask()"></ion-input>
+      <ion-button slot="end" (click)="addTask()" [disabled]="!newTaskTitle.trim()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <!-- Tasks List -->
+  <ion-list>
+    <ng-container *ngIf="!isLoading; else loadingTpl">
+      <ion-item-sliding *ngFor="let task of filteredTasks; trackBy: trackByTaskId">
+        <ion-item (click)="toggleTask(task)">
+          <ion-checkbox [class.completed]="task.completed" slot="start" [checked]="task.completed"
+            (ionChange)="toggleTask(task)"></ion-checkbox>
+          <ion-label>
+            <p [class.text-completed]="task.completed" class="task-label">{{ task.title }}</p>
+            <p [class.completed]="task.completed" class="category-label" [class.undefined]="task.categoryId === null">
+              <ion-icon style="margin-bottom: -1px;" name="bookmark"></ion-icon>
+              {{ getCategoryName(task.categoryId) }}
+            </p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteTask(task)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+          <ion-item-option *ngIf="!task.completed" color="warning" (click)="editTask(task)">
+            <ion-icon slot="icon-only" name="brush"></ion-icon>
+          </ion-item-option>
+          <ion-item-option *ngIf="!task.completed" color="primary" (click)="changeCategory(task)">
+            <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+
+</ion-content>
+
+<!-- List Skeleton -->
+<ng-template #loadingTpl>
+  <ion-list>
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <ion-label>
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>

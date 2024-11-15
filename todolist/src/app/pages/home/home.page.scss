@@ -1,0 +1,69 @@
+.fixed-top {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--ion-color-primary-contrast);
+}
+
+.task-label {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 0;
+    display: block;
+    overflow: hidden;
+    white-space: wrap;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+}
+
+.completed {
+    opacity: 0.6;
+}
+
+.text-completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.category-label {
+    background-color: var(--ion-color-primary);
+    border-radius: 4px;
+    padding: 4px;
+    line-height: 1;
+    font-size: 0.6em;
+    color: var(--ion-color-primary-contrast);
+    display: inline-block;
+}
+
+.category-label.undefined {
+    background-color: var(--ion-color-light);
+    color: var(--ion-color-medium);
+}
+
+.category-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.category-chip {
+    margin: 4px;
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-medium);
+    --border-radius: 8px;
+    --box-shadow: none;
+    --highlight-background: var(--ion-color-light);
+    --highlight-color: var(--ion-color-medium);
+    --highlight-opacity: 0.7;
+    --ripple-color: var(--ion-color-light);
+    --ripple-opacity: 0.5;
+}
+
+.category-chip.selected {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-light);
+}
